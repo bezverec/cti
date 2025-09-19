@@ -31,7 +31,7 @@ Custom Tiled Image is an experimental still image file format and encoder from T
 .\cti.exe encode in.tif out.cti --ndk
 ```
 ```bash
-# Decoding: RAW file and PNG Preview (8bpc)
+# Decoding: CTI file, RAW file and PNG file (8bpc)
 .\cti.exe decode out.cti out.raw --png-out out.png
 ```
 ```bash
