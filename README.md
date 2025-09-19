@@ -24,7 +24,7 @@ Custom Tiled Image is an experimental still image file format and encoder from T
    # binary will be in: .\cti\target\release\cti.exe
    ```
 ---
-## Quickstart
+## Quickstart (Windows)
 ```bash
 # Encoding, NDK preset
 .\cti.exe encode in.tif out.cti --ndk
