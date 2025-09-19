@@ -7,7 +7,7 @@ $env:RUSTFLAGS="-C target-cpu=native"; cargo build --release
 ```
 ## Quickstart
 ```bash
-# NDK preset
+# Encoding, NDK preset
 ./cti.exe encode in.tif out.cti --ndk
 ```
 ```bash
