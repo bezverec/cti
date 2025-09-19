@@ -1,6 +1,6 @@
 # cti
 
-![version](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/bezverec/cti/main/Cargo.toml&query=$.package.version&label=version&prefix=v) ![GitHub top language](https://img.shields.io/github/languages/top/cti/tif2jp2) ![GitHub last commit](https://img.shields.io/github/last-commit/bezverec/cti) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/bezverec/cti) ![GitHub repo size](https://img.shields.io/github/repo-size/bezverec/cti) ![LoC](https://tokei.rs/b1/github/bezverec/cti) ![Dependencies](https://deps.rs/repo/github/bezverec/cti/status.svg)
+![version](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/bezverec/cti/main/Cargo.toml&query=$.package.version&label=version&prefix=v) ![GitHub top language](https://img.shields.io/github/languages/top/bezverec/cti) ![GitHub last commit](https://img.shields.io/github/last-commit/bezverec/cti) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/bezverec/cti) ![GitHub repo size](https://img.shields.io/github/repo-size/bezverec/cti) ![LoC](https://tokei.rs/b1/github/bezverec/cti) ![Dependencies](https://deps.rs/repo/github/bezverec/cti/status.svg)
 
 Custom Tiled Image is an experimental still image file format and encoder from TIFF to CTI.
 
