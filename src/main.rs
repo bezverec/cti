@@ -7,9 +7,7 @@ use std::path::PathBuf;
 use std::time::Instant;
 
 mod cti;
-use cti::{
-    CTIDecoder, CTIEncoder, CTIConfig, CompressionType, TiffImage,
-};
+use cti::{CTIDecoder, CTIEncoder, CTIConfig, CompressionType, TiffImage};
 
 #[derive(Parser)]
 #[command(name = "cti", version, about = "CTI (Custom Tiled Image) tool")]
@@ -112,12 +110,12 @@ fn main() -> Result<()> {
             } else {
                 CTIConfig {
                     tile_size: tile.unwrap_or(256),
+                    zstd_level,
                     ..CTIConfig::default()
                 }
             };
             if rct { cfg.color_transform = true; }
 
-            // Použijeme klon, aby šlo cfg ještě vypsat níže.
             let enc = CTIEncoder::new(cfg.clone());
             let img = enc.load_tiff(&input)?;
             println!("Loaded TIFF: {}x{}, {:?}", img.width, img.height, img.color_type);
@@ -131,8 +129,10 @@ fn main() -> Result<()> {
 
         Commands::Decode { input, raw_out, png_out } => {
             let (hdr, buf) = CTIDecoder::decode(&input)?;
-            println!("Decoded CTI: {}x{}, ct={}, comp={}, tile={}",
-                hdr.width, hdr.height, hdr.color_type, hdr.compression, hdr.tile_size);
+            println!(
+                "Decoded CTI: {}x{}, ct={}, comp={}, tile={}",
+                hdr.width, hdr.height, hdr.color_type, hdr.compression, hdr.tile_size
+            );
 
             // raw out
             write_all(&raw_out, &buf)?;
@@ -190,8 +190,10 @@ fn main() -> Result<()> {
         Commands::DumpSections { input } => {
             let (hdr, _buf) = CTIDecoder::decode(&input)?;
             println!("CTI sections (placeholder): present after image data.");
-            println!("(hdr width={}, height={}, tiles={}x{})",
-                    hdr.width, hdr.height, hdr.tiles_x, hdr.tiles_y);
+            println!(
+                "(hdr width={}, height={}, tiles={}x{})",
+                hdr.width, hdr.height, hdr.tiles_x, hdr.tiles_y
+            );
         }
     }
 
@@ -205,7 +207,15 @@ fn write_all(path: &PathBuf, data: &[u8]) -> Result<()> {
     Ok(())
 }
 
-fn bench_encode(input_tiff: PathBuf, out_path_opt: Option<PathBuf>, ndk: bool, rct: bool, zstd_level: i32, tile: Option<u32>, repeat: u32) -> Result<()> {
+fn bench_encode(
+    input_tiff: PathBuf,
+    out_path_opt: Option<PathBuf>,
+    ndk: bool,
+    rct: bool,
+    zstd_level: i32,
+    tile: Option<u32>,
+    repeat: u32,
+) -> Result<()> {
     let out_path = out_path_opt.unwrap_or_else(|| input_tiff.with_extension("cti"));
 
     // preset
@@ -224,13 +234,24 @@ fn bench_encode(input_tiff: PathBuf, out_path_opt: Option<PathBuf>, ndk: bool, r
             ..CTIConfig::default()
         }
     };
-    if rct { cfg.color_transform = true; }
+    if rct {
+        cfg.color_transform = true;
+    }
 
     let enc = CTIEncoder::new(cfg.clone());
     let img: TiffImage = enc.load_tiff(&input_tiff)?;
-    println!("BENCH encode: {} ({}x{}, {:?}) → {} (tile={}, comp={:?}, RCT={}, zstd_level={})",
-        input_tiff.display(), img.width, img.height, img.color_type,
-        out_path.display(), cfg.tile_size, cfg.compression, cfg.color_transform, cfg.zstd_level);
+    println!(
+        "BENCH encode: {} ({}x{}, {:?}) → {} (tile={}, comp={:?}, RCT={}, zstd_level={})",
+        input_tiff.display(),
+        img.width,
+        img.height,
+        img.color_type,
+        out_path.display(),
+        cfg.tile_size,
+        cfg.compression,
+        cfg.color_transform,
+        cfg.zstd_level
+    );
 
     // sizes
     let tiff_bytes = fs::metadata(&input_tiff)?.len() as f64;
@@ -267,8 +288,14 @@ fn bench_encode(input_tiff: PathBuf, out_path_opt: Option<PathBuf>, ndk: bool, r
     println!("Output size: {:.2} MiB", out_size / (1024.0 * 1024.0));
     println!("Compression ratio vs RAW: {:.3}x", out_size / raw_bytes);
     println!("Compression ratio vs TIFF file: {:.3}x", out_size / tiff_bytes);
-    println!("Time (best/avg over {}): {:.1} ms / {:.1} ms", repeat, best_ms, avg_ms);
-    println!("Throughput (best/avg vs RAW): {:.1} MB/s / {:.1} MB/s", best_mb_s, avg_mb_s);
+    println!(
+        "Time (best/avg over {}): {:.1} ms / {:.1} ms",
+        repeat, best_ms, avg_ms
+    );
+    println!(
+        "Throughput (best/avg vs RAW): {:.1} MB/s / {:.1} MB/s",
+        best_mb_s, avg_mb_s
+    );
     Ok(())
 }
 
@@ -279,8 +306,16 @@ fn bench_decode(input_cti: PathBuf, out_raw_opt: Option<PathBuf>, repeat: u32) -
     let (hdr0, raw0) = CTIDecoder::decode(&input_cti)?;
     let raw_size = raw0.len() as f64;
     write_all(&out_raw, &raw0)?;
-    println!("BENCH decode: {} ({}x{}, ct={}, comp={}, tile={}) → {}",
-        input_cti.display(), hdr0.width, hdr0.height, hdr0.color_type, hdr0.compression, hdr0.tile_size, out_raw.display());
+    println!(
+        "BENCH decode: {} ({}x{}, ct={}, comp={}, tile={}) → {}",
+        input_cti.display(),
+        hdr0.width,
+        hdr0.height,
+        hdr0.color_type,
+        hdr0.compression,
+        hdr0.tile_size,
+        out_raw.display()
+    );
 
     let mut best_ms = f64::INFINITY;
     let mut sum_ms = 0.0;
@@ -299,7 +334,13 @@ fn bench_decode(input_cti: PathBuf, out_raw_opt: Option<PathBuf>, repeat: u32) -
     let avg_mb_s = mb / (avg_ms / 1000.0);
 
     println!("Raw size: {:.2} MiB", mb);
-    println!("Time (best/avg over {}): {:.1} ms / {:.1} ms", repeat, best_ms, avg_ms);
-    println!("Throughput (best/avg vs RAW): {:.1} MB/s / {:.1} MB/s", best_mb_s, avg_mb_s);
+    println!(
+        "Time (best/avg over {}): {:.1} ms / {:.1} ms",
+        repeat, best_ms, avg_ms
+    );
+    println!(
+        "Throughput (best/avg vs RAW): {:.1} MB/s / {:.1} MB/s",
+        best_mb_s, avg_mb_s
+    );
     Ok(())
 }
