@@ -1,10 +1,22 @@
 # cti
 Custom Tiled Images
+---
 
-## Build from source
-```bash
-$env:RUSTFLAGS="-C target-cpu=native"; cargo build --release
-```
+## Build from Source
+
+### Prerequisites
+1. install [Git](https://git-scm.com/)
+2. install [**Rust** (stable)](https://www.rust-lang.org/tools/install) and Cargo
+3. ```bash
+   git clone https://github.com/bezverec/cti.git
+   ```
+4. ```bash
+   cd cti
+   ```
+5. ```bash
+   $env:RUSTFLAGS="-C target-cpu=native"; cargo build --release
+   ```
+---
 ## Quickstart
 ```bash
 # Encoding, NDK preset
