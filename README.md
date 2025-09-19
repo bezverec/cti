@@ -1,6 +1,6 @@
 # cti
 
-Custom Tiled Images
+Custom Tiled Image is an experimental still image file format and encoder from TIFF to CTI.
 
 ---
 
