@@ -44,3 +44,6 @@ Custom Tiled Image is an experimental still image file format and encoder from T
 # decode benchmark
 .\cti.exe bench decode out.cti --repeat 5
 ```
+## AI generated code disclosure
+
+The code is AI generated using ChatGPT model 5.
