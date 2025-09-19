@@ -12,7 +12,7 @@ Custom Tiled Image is an experimental still image file format and encoder from T
 1. install [Git](https://git-scm.com/)
 2. install [**Rust** (stable)](https://www.rust-lang.org/tools/install) and Cargo
 
-### Compilation   
+### Compilation (Windows)   
 1. ```bash
    git clone https://github.com/bezverec/cti.git
    ```
