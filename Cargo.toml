@@ -1,8 +1,9 @@
 [package]
 name = "cti"
-version = "0.0.2"
+version = "0.1.2"
 edition = "2024"
-description = "CTI (Custom Tiled Image): tiled raster, lossless Zstd/LZ4, RCT, TIFF DPI/ICC, NDK preset"
+license = "MIT"
+description = "CTI (Custom Tiled Image) v1.1: tiled raster, lossless Zstd/LZ4, RCT, TIFF DPI/ICC, NDK preset"
 
 [dependencies]
 anyhow = "1.0"
@@ -12,9 +13,3 @@ rayon = "1.10"
 zstd = { version = "0.13", features = ["zstdmt"] }
 lz4_flex = "0.11"
 tiff = "0.10"
-
-[profile.release]
-opt-level = 3
-lto = "thin"
-codegen-units = 1
-panic = "abort"
