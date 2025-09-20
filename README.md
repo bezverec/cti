@@ -54,7 +54,7 @@ The code is AI generated using ChatGPT model 5.
 
 ---
 
-# 📄 CTI File Format Specification – Version 1.0
+# 📄 CTI File Format Specification – Version 0.1
 
 ---
 
