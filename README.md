@@ -53,6 +53,11 @@ Custom Tiled Image is an experimental still image file format and encoder from T
 The code is AI generated using ChatGPT model 5.
 
 ---
+## Viewer
+
+A simple viewer can be found here: https://github.com/bezverec/cti-view
+
+---
 
 # 📄 CTI File Format Specification – Version 1.0
 
