@@ -11,7 +11,7 @@ image = { version = "0.25", default-features = false, features = ["tiff", "png",
 rayon = "1.10"
 zstd = { version = "0.13", features = ["zstdmt"] }
 lz4_flex = "0.11"
-tiff = "0.10"
+tiff = "0.11"
 crc32fast = "1.5.0"
 
 [profile.release]
