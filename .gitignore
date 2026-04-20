@@ -1,0 +1,9 @@
+/target/
+
+# Local benchmark / scratch outputs
+/*.raw
+/*.jp2
+/bench_*
+/grok_*
+/noxmp_*.cti
+/0003_*.cti
